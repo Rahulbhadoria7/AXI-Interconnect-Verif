@@ -1,5 +1,4 @@
 interface axi #(
-   // Sample message 
    // Number of AXI inputs (slave interfaces)
     parameter S_COUNT = 4,
     // Number of AXI outputs (master interfaces)
