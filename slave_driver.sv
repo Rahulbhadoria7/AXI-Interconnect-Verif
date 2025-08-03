@@ -120,26 +120,13 @@ begin
 		@(vif.s_drv);
 
 		
-		if(vif.s_drv.WSTRB==1111)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA;
-		else if(vif.s_drv.WSTRB==1000)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[31:24];
-		else if(vif.s_drv.WSTRB==0100)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[23:16];
-		else if(vif.s_drv.WSTRB==0010)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[15:8];
-		else if(vif.s_drv.WSTRB==0001)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[7:0];
-		else if(vif.s_drv.WSTRB==0011)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[15:0];
-		else if(vif.s_drv.WSTRB==0110)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[23:8];
-		else if(vif.s_drv.WSTRB==1100)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[31:16];
-		else if(vif.s_drv.WSTRB==0111)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[23:0];
-		else if(vif.s_drv.WSTRB==1110)
-			smem[xtn.waddr[i]] = vif.s_drv.WDATA[31:8];
+		for(int j=0 ; j<$bits(vif.s_drv.WSTRB);j++)
+       begin
+         if(vif.s_drv.WSTRB[j])
+                begin
+                  smem[xtn.waddr[i] + j] = vif.s_drv.WDATA[(j*8)+:8];
+                end
+       end
 	
 		vif.s_drv.WREADY <=1;
 		@(vif.s_drv);
